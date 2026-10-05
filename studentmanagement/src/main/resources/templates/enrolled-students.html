@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Enrolled Students</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body{
+            background:#f5f7fb;
+            font-family:Arial, sans-serif;
+        }
+		.sidebar{
+		            width:230px;
+		            background:#1f1f1f;
+		            color:white;
+		            height:100vh;
+		            padding:20px;
+		            position:fixed;
+		        }
+
+		        .sidebar h4{
+		            margin-bottom:25px;
+		        }
+
+		        .sidebar a{
+		            display:block;
+		            color:white;
+		            margin:12px 0;
+		            text-decoration:none;
+		            padding:8px 10px;
+		            border-radius:6px;
+		            transition:0.3s;
+		        }
+
+		        .sidebar a:hover{
+		            background:#0d6efd;
+		            color:white;
+		        }
+
+        .container-box{
+            width:1000px;
+            margin:40px auto;
+        }
+
+        .top-box{
+            background:#4663f0;
+            color:white;
+            padding:25px;
+            border-radius:10px;
+            margin-bottom:25px;
+        }
+
+        .card{
+            border:none;
+            border-radius:12px;
+            box-shadow:0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .eye-btn{
+            text-decoration:none;
+            padding:5px 12px;
+            border-radius:6px;
+            background:#20c8f5;
+            color:white;
+        }
+    </style>
+</head>
+<body>
+	<div class="sidebar">
+	    <h4>Student MS</h4>
+	    <a href="/">Dashboard</a>
+	    <a href="/addStudent">Add Student</a>
+	    <a href="/students">Student List</a>
+	    <a href="/courses/add">Add Course</a>
+	    <a href="/courses/list">Course List</a>
+	    <a href="/enroll">Enroll Course</a>
+		<a href="/enrolled-students">View enrolled students</a>
+					  
+	</div>
+
+
+<div class="container-box">
+
+    <div class="top-box d-flex justify-content-between align-items-center">
+        <div>
+            <h2>Students Enrolled in Courses</h2>
+            <p class="mb-0">Track enrolled students and details</p>
+        </div>
+
+        <a th:href="@{/enroll}" class="btn btn-light">+ Enroll Student</a>
+    </div>
+
+    <div class="card p-4">
+
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="e, stat : ${students}" th:if="${e.student != null}">
+                <td th:text="${stat.count}"></td>
+                <td th:text="${e.student.firstName}"></td>
+                <td th:text="${e.student.email}"></td>
+                <td>
+                    <a class="eye-btn"
+                       th:href="@{/enrollment-details/{id}(id=${e.student.id})}">
+                        👁
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+			
+			<form th:action="@{/enrolled-students}" method="get" class="mb-3">
+			    <div class="row">
+			        <div class="col-md-4">
+			            <input type="text"
+			                   class="form-control"
+			                   name="keyword"
+			                   th:value="${keyword}"
+			                   placeholder="Search student name">
+			        </div>
+
+			        <div class="col-md-2">
+			            <button class="btn btn-primary">Search</button>
+			        </div>
+			    </div>
+			</form>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

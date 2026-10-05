@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Course</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body{
+            display:flex;
+            margin:0;
+            font-family: Arial, sans-serif;
+            background:#f4f6f9;
+        }
+
+        .sidebar{
+            width:230px;
+            background:#1f1f1f;
+            color:white;
+            height:100vh;
+            padding:20px;
+            position:fixed;
+        }
+
+        .sidebar h4{
+            margin-bottom:25px;
+        }
+
+        .sidebar a{
+            display:block;
+            color:white;
+            margin:12px 0;
+            text-decoration:none;
+            padding:8px 10px;
+            border-radius:6px;
+            transition:0.3s;
+        }
+
+        .sidebar a:hover{
+            background:#0d6efd;
+            color:white;
+        }
+
+        .content{
+            margin-left:230px;
+            width:100%;
+            padding:30px;
+        }
+
+        .header-box{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:20px;
+        }
+
+        .form-card{
+            background:white;
+            padding:28px;
+            border-radius:12px;
+            box-shadow:0 2px 8px rgba(0,0,0,0.08);
+            max-width:900px;
+        }
+
+        .form-label{
+            font-weight:500;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h4>Student MS</h4>
+    <a href="/">Dashboard</a>
+    <a href="/addStudent">Add Student</a>
+    <a href="/students">Student List</a>
+    <a href="/courses/add">Add Course</a>
+    <a href="/courses/list">Course List</a>
+    <a href="/enroll">Enroll Course</a>
+</div>
+
+<div class="content">
+
+    <div class="header-box">
+        <h2>Edit Course</h2>
+        <a th:href="@{/courses/list}" class="btn btn-secondary">⬅ Back to List</a>
+    </div>
+
+    <div class="form-card">
+
+        <form th:action="@{/courses/update}" th:object="${course}" method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Course Name</label>
+                    <input type="text" th:field="*{courseName}" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Duration</label>
+                    <input type="text" th:field="*{duration}" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Course Code</label>
+                    <input type="text" th:field="*{courseCode}" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Course Fee</label>
+                    <input type="number" step="0.01" th:field="*{courseFee}" class="form-control" required>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea th:field="*{description}" class="form-control" rows="4" required></textarea>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update Course</button>
+            <a th:href="@{/courses/list}" class="btn btn-outline-secondary">Cancel</a>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
